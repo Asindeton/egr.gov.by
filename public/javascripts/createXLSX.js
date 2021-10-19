@@ -1,5 +1,5 @@
 const xl = require("excel4node");
-fs = require("fs");
+const fs = require("fs-extra");
 
 module.exports = {
   createFile: (data) => {
