@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1= h1
+  form(action='/send_email', method='POST')
+      p
+        | email: 
+        input(type='text', name='title', value='')
+      input(type='submit', value='Submit')
+  

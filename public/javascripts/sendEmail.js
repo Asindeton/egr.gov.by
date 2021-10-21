@@ -2,8 +2,12 @@ require("dotenv").config();
 const nodemailer = require("nodemailer");
 
 module.exports = {
-  sendEmail: (path) => {
+  sendEmail: (
+    path,
+    email = "info@webfocus.by, info@sovetnik.by, baza@jurisprudent.by",
+  ) => {
     console.log(path);
+    console.log(email);
     let transporter = nodemailer.createTransport({
       service: "yandex",
       auth: {
@@ -17,7 +21,7 @@ module.exports = {
 
     let mailOptions = {
       from: process.env.POST_EMAIL,
-      to: "legankov95@gmail.com",
+      to: email,
       subject: `Данные за ${new Date().toLocaleDateString()}`,
       attachments: [
         {
