@@ -14,22 +14,18 @@ const writeXML = async (email) => {
   yesterday.setDate(yesterday.getDate() - 1);
   yesterday2.setDate(yesterday.getDate() - 1);
 
+  let _y = `${yesterday.getDate()}.${
+    yesterday.getMonth() + 1
+  }.${yesterday.getFullYear()}`;
+
+  let _y2 = `${yesterday2.getDate()}.${
+    yesterday2.getMonth() + 1
+  }.${yesterday2.getFullYear()}`;
+
   const requestArr = await Promise.all([
-    GovernmentApiCall.getAddressByPeriod(
-      yesterday2.toLocaleDateString(),
-      yesterday.toLocaleDateString(),
-      "getIPFIOByPeriod",
-    ),
-    GovernmentApiCall.getAddressByPeriod(
-      yesterday2.toLocaleDateString(),
-      yesterday.toLocaleDateString(),
-      "getAddressByPeriod",
-    ),
-    GovernmentApiCall.getAddressByPeriod(
-      yesterday2.toLocaleDateString(),
-      yesterday.toLocaleDateString(),
-      "getJurNamesByPeriod",
-    ),
+    GovernmentApiCall.getAddressByPeriod(_y2, _y, "getIPFIOByPeriod"),
+    GovernmentApiCall.getAddressByPeriod(_y2, _y, "getAddressByPeriod"),
+    GovernmentApiCall.getAddressByPeriod(_y2, _y, "getJurNamesByPeriod"),
   ]);
   sendEmail.sendEmail(await creatXLSXFile.createFile(requestArr), email);
   // console.log('Жду path',creatXLSXFile.createFile(requestArr));
@@ -43,6 +39,13 @@ schedule.scheduleJob("0 0 * * *", async function () {
 /* GET home page. */
 router.get("/", function (req, res, next) {
   // writeXML();
+  let today = new Date();
+  const fileName = `${`${today.getDate()}.${
+    today.getMonth() + 1
+  }.${today.getFullYear()}`}_${new Date().getHours()}.${new Date().getMinutes()}.${new Date().getSeconds()}`;
+
+  console.log(fileName);
+
   res.render("index", {
     title: "Webfocus egr.gov.by",
     h1: "Введите свою почту для получения информации",

@@ -3,10 +3,10 @@ const XLSX = require("xlsx");
 
 module.exports = {
   createFile: async (dataArr) => {
-    const fileName = `${new Date().toLocaleDateString()}_${new Date()
-      .toLocaleTimeString()
-      .split(":")
-      .join(".")}`;
+    let today = new Date();
+    const fileName = `${today.getDate()}.${
+      today.getMonth() + 1
+    }.${today.getFullYear()}_${new Date().getHours()}.${new Date().getMinutes()}.${new Date().getSeconds()}`;
     const path = `./data/${fileName}.xlsx`;
 
     async function getInfoForTable(arr1, additionalData) {
