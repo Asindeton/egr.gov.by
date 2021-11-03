@@ -22,6 +22,8 @@ const writeXML = async (email) => {
     yesterday2.getMonth() + 1
   }.${yesterday2.getFullYear()}`;
 
+  // let _y = "01.11.2021";
+  // let _y2 = "28.10.2021";
   const requestArr = await Promise.all([
     GovernmentApiCall.getAddressByPeriod(_y2, _y, "getIPFIOByPeriod"),
     GovernmentApiCall.getAddressByPeriod(_y2, _y, "getAddressByPeriod"),

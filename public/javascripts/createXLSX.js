@@ -1,5 +1,6 @@
 const getName = require("../javascripts/getUserInfo");
 const XLSX = require("xlsx");
+const path = require("path");
 
 module.exports = {
   createFile: async (dataArr) => {
@@ -7,7 +8,7 @@ module.exports = {
     const fileName = `${today.getDate()}.${
       today.getMonth() + 1
     }.${today.getFullYear()}_${new Date().getHours()}.${new Date().getMinutes()}.${new Date().getSeconds()}`;
-    const path = `./data/${fileName}.xlsx`;
+    const pathDir = path.join(path.resolve("./data/"), `${fileName}.xlsx`);
 
     async function getInfoForTable(arr1, additionalData) {
       let _nameId = [];
@@ -84,7 +85,7 @@ module.exports = {
     XLSX.utils.book_append_sheet(workBook, workSheet3, "Юр. Лица");
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
-    XLSX.writeFile(workBook, path);
-    return path;
+    XLSX.writeFile(workBook, pathDir);
+    return pathDir;
   },
 };
