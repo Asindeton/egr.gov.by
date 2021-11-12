@@ -1,8 +1,137 @@
 body {
-  padding: 50px;
+  /* padding: 50px; */
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #f2f2f2;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+img {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+.wrapper {
+  max-height: 100vh;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  height: 100%;
+  overflow: hidden;
+}
+.img-wrapper {
+  max-width: 845px;
+  width: 100%;
+}
+.content-wrapper {
+  position: relative;
+  margin: 2vw 10vw 0 10vw;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  height: 100vh;
+  justify-content: center;
+}
+
+.logo-wrapper {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+}
+
+.content-wrapper h1 {
+  font-family: "Commissioner", sans-serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  max-width: 500px;
+  color: #1a1a1a;
+  margin-bottom: 40px;
+}
+.input_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.input_wrapper:first-child {
+  margin-bottom: 30px;
+}
+.input_wrapper:last-child {
+  margin-bottom: 60px;
+}
+.input_wrapper span {
+  font-family: "Commissioner", sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  text-align: left;
+  color: #808080;
+  margin-bottom: 5px;
+}
+input[type="text"] {
+  padding: 14px 20px;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+  border: none;
+  max-width: 370px;
+}
+input[type="submit"] {
+  padding: 8px 30px;
+  background: #dec377;
+  border-radius: 2px;
+  border: none;
+  font-family: "Commissioner", sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+input[type="date"] {
+  padding: 14px 20px;
+  border: none;
+  border-radius: 2px;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 25px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.data_input {
+  margin-right: 40px;
+}
+.date_input_wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20px;
+}
+.date_input_wrapper span {
+  margin-right: 20px;
+}
+.gold_text {
+  color: #dec377;
+}
+@media screen and (max-width: 768px) {
+  .img-wrapper {
+    display: none;
+  }
 }

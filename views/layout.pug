@@ -3,5 +3,15 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/reset.css')
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com" crossorigin)
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;700&family=Lato:wght@300&display=swap")
   body
-    block content
+    div(class='wrapper')
+      div(class='content-wrapper')
+        div(class='logo-wrapper')
+          img(src="/public/images/logo.svg", alt="", srcset="")
+        block content
+      div(class='img-wrapper') 
+        img(src="/public/images/ab9e013ff3411194637dedb9a478eca4.jpg", alt="", srcset="")

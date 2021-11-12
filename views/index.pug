@@ -3,8 +3,16 @@ extends layout
 block content
   h1= h1
   form(action='/send_email', method='POST')
-      p
-        | email: 
-        input(type='text', name='title', value='')
-      input(type='submit', value='Submit')
-  
+    div
+      label(for="email", class='input_wrapper')
+        span E-mail
+        input(type='text', name='email', value='', id='email', placeholder='Введите ваш E-mail')
+      div(class='input_wrapper')
+        span Период
+        div(class='date_input_wrapper')
+          span от
+          input(type="date", name="from" class='data_input')
+          span до
+          input(type="date", name="to" max=yesterday)
+
+    input(type='submit', value='Получить информацию')

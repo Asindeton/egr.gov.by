@@ -5,6 +5,8 @@ module.exports = {
   sendEmail: (
     path,
     email = "info@webfocus.by, info@sovetnik.by, baza@jurisprudent.by",
+    from,
+    to,
   ) => {
     let transporter = nodemailer.createTransport({
       service: "yandex",
@@ -20,10 +22,10 @@ module.exports = {
     let mailOptions = {
       from: process.env.POST_EMAIL,
       to: email,
-      subject: `Данные за ${new Date().toLocaleDateString()}`,
+      subject: `Данные с ${from} по ${to}`,
       attachments: [
         {
-          filename: `Данные за ${new Date().toLocaleDateString()}` + ".xlsx",
+          filename: `Данные_с_${from}_по_${to}` + ".xlsx",
           content: path,
           contentType:
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

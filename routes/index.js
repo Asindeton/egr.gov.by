@@ -7,12 +7,17 @@ require("dotenv").config();
 var router = express.Router();
 fs = require("fs");
 
-const writeXML = async (email) => {
+const writeXML = async (email, from, to) => {
   const today = new Date();
-  const yesterday = new Date(today);
-  const yesterday2 = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-  yesterday2.setDate(yesterday.getDate() - 1);
+  let yesterday = new Date(today);
+  let yesterday2 = new Date(today);
+  if (from !== "" && to !== "") {
+    yesterday = new Date(to);
+    yesterday2 = new Date(from);
+  } else {
+    yesterday.setDate(yesterday.getDate() - 1);
+    yesterday2.setDate(yesterday2.getDate() - 2);
+  }
 
   let _y = `${yesterday.getDate()}.${
     yesterday.getMonth() + 1
@@ -30,7 +35,12 @@ const writeXML = async (email) => {
     GovernmentApiCall.getAddressByPeriod(_y2, _y, "getJurNamesByPeriod"),
   ]);
   // await creatXLSXFile.createFile(requestArr);
-  sendEmail.sendEmail(await creatXLSXFile.createFile(requestArr), email);
+  sendEmail.sendEmail(
+    await creatXLSXFile.createFile(requestArr),
+    email,
+    _y2,
+    _y,
+  );
   // console.log('Жду path',creatXLSXFile.createFile(requestArr));
 };
 
@@ -41,26 +51,29 @@ schedule.scheduleJob("0 0 * * *", async function () {
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  // writeXML();
-  let today = new Date();
-  const fileName = `${`${today.getDate()}.${
-    today.getMonth() + 1
-  }.${today.getFullYear()}`}_${new Date().getHours()}.${new Date().getMinutes()}.${new Date().getSeconds()}`;
+  const today = new Date();
+  var yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
 
-  console.log(fileName);
+  var dd = yesterday.getDate();
+  var mm = yesterday.getMonth() + 1; //January is 0!
+  var yyyy = yesterday.getFullYear();
 
+  yesterday = yyyy + "-" + mm + "-" + dd;
+  console.log(yesterday);
   res.render("index", {
     title: "Webfocus egr.gov.by",
     h1: "Введите свою почту для получения информации",
+    yesterday: yesterday,
   });
 });
 
 router.post("/send_email", function (req, res, next) {
-  const email = req.body.title;
-  writeXML(email);
+  const { email, from, to } = req.body;
+  writeXML(email, from, to);
   res.render("emailIsSended", {
     title: "Webfocus egr.gov.by",
-    h1: `Информация отправлена на почту ${email}`,
+    h1: email,
   });
 });
 module.exports = router;
