@@ -14,16 +14,16 @@ const writeXML = async (email) => {
   yesterday.setDate(yesterday.getDate() - 1);
   yesterday2.setDate(yesterday.getDate() - 1);
 
-  // let _y = `${yesterday.getDate()}.${
-  //   yesterday.getMonth() + 1
-  // }.${yesterday.getFullYear()}`;
+  let _y = `${yesterday.getDate()}.${
+    yesterday.getMonth() + 1
+  }.${yesterday.getFullYear()}`;
 
-  // let _y2 = `${yesterday2.getDate()}.${
-  //   yesterday2.getMonth() + 1
-  // }.${yesterday2.getFullYear()}`;
+  let _y2 = `${yesterday2.getDate()}.${
+    yesterday2.getMonth() + 1
+  }.${yesterday2.getFullYear()}`;
 
-  let _y = "06.11.2021"; // Верхнее
-  let _y2 = "04.11.2021"; // Нижнее
+  // let _y = "06.11.2021"; // Верхнее
+  // let _y2 = "04.11.2021"; // Нижнее
   const requestArr = await Promise.all([
     GovernmentApiCall.getAddressByPeriod(_y2, _y, "getIPFIOByPeriod"),
     GovernmentApiCall.getAddressByPeriod(_y2, _y, "getAddressByPeriod"),

@@ -2,7 +2,6 @@ const getName = require("../javascripts/getUserInfo");
 const XLSX = require("xlsx");
 const path = require("path");
 require("dotenv").config();
-const nodemailer = require("nodemailer");
 
 module.exports = {
   createFile: async (dataArr) => {
@@ -103,43 +102,6 @@ module.exports = {
       bookType: "xlsx",
       bookSST: false,
     });
-    // console.log(workBook);
-    // let some = XLSX.utils.sheet_to_buffer(await workBook);
-    // console.log("qwe");
-    // console.log(some);
-    // console.log(workBook);
     return data;
-    // let transporter = nodemailer.createTransport({
-    //   service: "yandex",
-    //   auth: {
-    //     user: process.env.POST_EMAIL,
-    //     pass: process.env.POST_PASSWORD,
-    //   },
-    //   tls: {
-    //     rejectUnauthorized: false,
-    //   },
-    // });
-
-    // let mailOptions = {
-    //   from: process.env.POST_EMAIL,
-    //   to: "legankov95@gmail.com",
-    //   subject: `Данные за ${new Date().toLocaleDateString()}`,
-    //   attachments: [
-    //     {
-    //       fileName,
-    //       content: workBook,
-    //       contentType:
-    //         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    //     },
-    //   ],
-    // };
-
-    // transporter.sendMail(mailOptions, function (err, success) {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     console.log("Email is send");
-    //   }
-    // });
   },
 };
