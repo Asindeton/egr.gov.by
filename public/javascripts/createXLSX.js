@@ -97,7 +97,7 @@ module.exports = {
     XLSX.utils.book_append_sheet(workBook, workSheet3, "Юр. Лица");
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
-    XLSX.writeFile(workBook, pathDir);
+    // XLSX.writeFile(workBook, pathDir);
     let data = XLSX.write(workBook, {
       type: "buffer",
       bookType: "xlsx",
@@ -107,7 +107,7 @@ module.exports = {
     // let some = XLSX.utils.sheet_to_buffer(await workBook);
     // console.log("qwe");
     // console.log(some);
-    console.log(workBook);
+    // console.log(workBook);
     return data;
     // let transporter = nodemailer.createTransport({
     //   service: "yandex",
