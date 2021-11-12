@@ -10,10 +10,8 @@ module.exports = {
       today.getMonth() + 1
     }.${today.getFullYear()}_${new Date().getHours()}.${new Date().getMinutes()}.${new Date().getSeconds()}.xlsx`;
 
-    const pathDir = path.join(path.resolve("./data/"), fileName);
-    console.log(dataArr[0]);
+    // const pathDir = path.join(path.resolve("./data/"), fileName);
     console.log("Цикл начат");
-    console.log(pathDir);
     async function getInfoForTable(arr1, additionalData) {
       let _nameId = [];
       let _tempData = [];
