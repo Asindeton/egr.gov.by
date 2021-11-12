@@ -1,12 +1,14 @@
 require("dotenv").config();
 const nodemailer = require("nodemailer");
+const { Buffer } = require("buffer");
+var toCsv = require("to-csv");
 
 module.exports = {
   sendEmail: (
     path,
     email = "info@webfocus.by, info@sovetnik.by, baza@jurisprudent.by",
   ) => {
-    console.log(path);
+    // console.table(path);
     console.log(email);
     let transporter = nodemailer.createTransport({
       service: "yandex",
@@ -25,7 +27,12 @@ module.exports = {
       subject: `Данные за ${new Date().toLocaleDateString()}`,
       attachments: [
         {
-          path: path,
+          filename: `Данные за ${new Date().toLocaleDateString()}` + ".xlsx",
+          // content: new Buffer(path),
+          // path,
+          content: path,
+          contentType:
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         },
       ],
     };

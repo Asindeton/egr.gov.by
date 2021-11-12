@@ -1,14 +1,19 @@
 const getName = require("../javascripts/getUserInfo");
 const XLSX = require("xlsx");
 const path = require("path");
+require("dotenv").config();
+const nodemailer = require("nodemailer");
 
 module.exports = {
   createFile: async (dataArr) => {
     let today = new Date();
     const fileName = `${today.getDate()}.${
       today.getMonth() + 1
-    }.${today.getFullYear()}_${new Date().getHours()}.${new Date().getMinutes()}.${new Date().getSeconds()}`;
-    const pathDir = path.join(path.resolve("./data/"), `${fileName}.xlsx`);
+    }.${today.getFullYear()}_${new Date().getHours()}.${new Date().getMinutes()}.${new Date().getSeconds()}.xlsx`;
+
+    const pathDir = path.join(path.resolve("./data/"), fileName);
+    console.log(dataArr[0]);
+    console.log("Цикл начат");
     console.log(pathDir);
     async function getInfoForTable(arr1, additionalData) {
       let _nameId = [];
@@ -70,9 +75,9 @@ module.exports = {
         }
         return false;
       });
-
       return _t;
     }
+    console.log("Цикл закончен");
 
     const workSheet2 = XLSX.utils.json_to_sheet(
       await getInfoForTable(dataArr[1].data, "ИП"),
@@ -80,12 +85,61 @@ module.exports = {
     const workSheet3 = XLSX.utils.json_to_sheet(
       await getInfoForTable(dataArr[1].data, "ЮР"),
     );
+
+    // let some3 = XLSX.utils.sheet_to_buffer(await workSheet3);
+    // console.log("some2");
+    // console.log(some2);
+    // console.log("some3");
+    // console.log(some3);
+
     const workBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workBook, workSheet2, "ИП");
     XLSX.utils.book_append_sheet(workBook, workSheet3, "Юр. Лица");
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
-    XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
+    XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     XLSX.writeFile(workBook, pathDir);
-    return pathDir;
+    let data = XLSX.write(workBook, {
+      type: "buffer",
+      bookType: "xlsx",
+      bookSST: false,
+    });
+    // console.log(workBook);
+    // let some = XLSX.utils.sheet_to_buffer(await workBook);
+    // console.log("qwe");
+    // console.log(some);
+    console.log(workBook);
+    return data;
+    // let transporter = nodemailer.createTransport({
+    //   service: "yandex",
+    //   auth: {
+    //     user: process.env.POST_EMAIL,
+    //     pass: process.env.POST_PASSWORD,
+    //   },
+    //   tls: {
+    //     rejectUnauthorized: false,
+    //   },
+    // });
+
+    // let mailOptions = {
+    //   from: process.env.POST_EMAIL,
+    //   to: "legankov95@gmail.com",
+    //   subject: `Данные за ${new Date().toLocaleDateString()}`,
+    //   attachments: [
+    //     {
+    //       fileName,
+    //       content: workBook,
+    //       contentType:
+    //         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    //     },
+    //   ],
+    // };
+
+    // transporter.sendMail(mailOptions, function (err, success) {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     console.log("Email is send");
+    //   }
+    // });
   },
 };
