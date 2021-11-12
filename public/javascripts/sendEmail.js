@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer");
 module.exports = {
   sendEmail: (
     path,
-    email = "info@webfocus.by, info@sovetnik.by, baza@jurisprudent.by",
+    email = "info@webfocus.by, info@sovetnik.by, baza@jurisprudent.by, legankov95@gmail.com",
     from,
     to,
   ) => {
