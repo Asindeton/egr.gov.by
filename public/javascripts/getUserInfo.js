@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const BASE_URL = `http://egr.gov.by/api/v2/egr`;
-
+let i = 0;
 module.exports = {
   getIPinfo: (request, ngrn) =>
     axios({

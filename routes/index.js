@@ -34,7 +34,7 @@ const writeXML = async (email, from, to) => {
     GovernmentApiCall.getAddressByPeriod(_y2, _y, "getAddressByPeriod"),
     GovernmentApiCall.getAddressByPeriod(_y2, _y, "getJurNamesByPeriod"),
   ]);
-  // await creatXLSXFile.createFile(requestArr);
+  await creatXLSXFile.createFile(requestArr);
   sendEmail.sendEmail(
     await creatXLSXFile.createFile(requestArr),
     email,

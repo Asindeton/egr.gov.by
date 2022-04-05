@@ -11,7 +11,7 @@ module.exports = {
     }.${today.getFullYear()}_${new Date().getHours()}.${new Date().getMinutes()}.${new Date().getSeconds()}.xlsx`;
 
     // const pathDir = path.join(path.resolve("./data/"), fileName);
-    console.log("Цикл начат");
+
     async function getInfoForTable(arr1, additionalData) {
       let _nameId = [];
       let _tempData = [];
@@ -19,23 +19,28 @@ module.exports = {
       arr1.map(async (e, i) => {
         _nameId.push(e["ngrn"]);
       });
+
       let searchRequest = "";
       let nameRequestValue = "";
-      // console.table(arr1);
+
       switch (additionalData) {
-        case "ИП":
-          searchRequest = "getIPFIOByRegNum";
-          nameRequestValue = "vfio";
-          break;
+        // case "ИП":
+        //   searchRequest = "getIPFIOByRegNum";
+        //   nameRequestValue = "vfio";
+        //   break;
         case "ЮР":
           searchRequest = "getJurNamesByRegNum";
           nameRequestValue = "vfn";
           break;
       }
+
       const _Name = await Promise.all(
         _nameId.map((ngrn) => getName.getIPinfo(searchRequest, ngrn)),
       );
-      const _ss = await _Name.map((item) => item.data[0]);
+
+      const _ss = await _Name.map((item) => {
+        return item.data[0] !== undefined ? item.data[0] : undefined;
+      });
 
       const _s = _ss.filter(function (el) {
         return el !== undefined;
@@ -74,14 +79,25 @@ module.exports = {
       });
       return _t;
     }
-    console.log("Цикл закончен");
+    // console.log("dataArr[0].data");
+    // console.table(dataArr[0].data);
+    // console.log("dataArr[1].data");
+    // console.table(dataArr[1].data);
 
-    const workSheet2 = XLSX.utils.json_to_sheet(
-      await getInfoForTable(dataArr[1].data, "ИП"),
-    );
-    const workSheet3 = XLSX.utils.json_to_sheet(
-      await getInfoForTable(dataArr[1].data, "ЮР"),
-    );
+    const workSheet2 = XLSX.utils.json_to_sheet(dataArr[0].data);
+    // const workSheet4 = XLSX.utils.json_to_sheet(dataArr[2].data);
+
+    // const workSheet5 = XLSX.utils.json_to_sheet(
+    //   await getInfoForTable(dataArr[0].data, "ИП"),
+    // );
+
+    // const workSheet3 = XLSX.utils.json_to_sheet(
+    //   await getInfoForTable(dataArr[1].data, "ЮР"),
+    // );
+    const workSheet3 = XLSX.utils.json_to_sheet(dataArr[1].data);
+    const workSheet4 = XLSX.utils.json_to_sheet(dataArr[2].data);
+
+    // const workSheet4 = XLSX.utils.json_to_sheet(dataArr[1].data);
 
     // let some3 = XLSX.utils.sheet_to_buffer(await workSheet3);
     // console.log("some2");
@@ -90,16 +106,25 @@ module.exports = {
     // console.log(some3);
 
     const workBook = XLSX.utils.book_new();
+
     XLSX.utils.book_append_sheet(workBook, workSheet2, "ИП");
+    // XLSX.utils.book_append_sheet(workBook, workSheet5, "ИП2");
     XLSX.utils.book_append_sheet(workBook, workSheet3, "Юр. Лица");
+    // XLSX.utils.book_append_sheet(workBook, workSheet4, "Юр. Лица2");
+    XLSX.utils.book_append_sheet(workBook, workSheet4, "Юр. Лица Адреса");
+
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
+
     // XLSX.writeFile(workBook, pathDir);
+
     let data = XLSX.write(workBook, {
       type: "buffer",
       bookType: "xlsx",
       bookSST: false,
     });
+
+    // console.log(data);
     return data;
   },
 };
