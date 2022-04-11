@@ -7,7 +7,7 @@ require("dotenv").config();
 var router = express.Router();
 fs = require("fs");
 
-const writeXML = async (email, from, to) => {
+const writeXML = async (email, from, to, difficulty) => {
   const today = new Date();
   let yesterday = new Date(today);
   let yesterday2 = new Date(today);
@@ -34,14 +34,14 @@ const writeXML = async (email, from, to) => {
     GovernmentApiCall.getAddressByPeriod(_y2, _y, "getAddressByPeriod"),
     GovernmentApiCall.getAddressByPeriod(_y2, _y, "getJurNamesByPeriod"),
   ]);
-  await creatXLSXFile.createFile(requestArr);
+  // await creatXLSXFile.createFile(requestArr, difficulty);
   sendEmail.sendEmail(
-    await creatXLSXFile.createFile(requestArr),
+    await creatXLSXFile.createFile(requestArr, difficulty),
     email,
     _y2,
     _y,
   );
-  console.log("Жду path", creatXLSXFile.createFile(requestArr));
+  // console.log("Жду path", creatXLSXFile.createFile(requestArr));
 };
 
 schedule.scheduleJob("0 0 * * *", async function () {
@@ -56,7 +56,10 @@ router.get("/", function (req, res, next) {
   yesterday.setDate(yesterday.getDate() - 1);
 
   var dd = yesterday.getDate();
-  var mm = yesterday.getMonth() + 1; //January is 0!
+  var mm =
+    yesterday.getMonth() + 1 < 10
+      ? `0${yesterday.getMonth() + 1}`
+      : yesterday.getMonth() + 1; //January is 0!
   var yyyy = yesterday.getFullYear();
 
   yesterday = yyyy + "-" + mm + "-" + dd;
@@ -69,8 +72,10 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/send_email", function (req, res, next) {
-  const { email, from, to } = req.body;
-  writeXML(email, from, to);
+  const { email, from, to, difficulty } = req.body;
+  console.log({ email, from, to, difficulty });
+  // console.log(req);
+  writeXML(email, from, to, difficulty);
   res.render("emailIsSended", {
     title: "Webfocus egr.gov.by",
     h1: email,

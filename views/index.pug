@@ -14,5 +14,15 @@ block content
           input(type="date", name="from" class='data_input' max=yesterday)
           span до
           input(type="date", name="to" max=yesterday)
+      div(class='input_wrapper checkbox-area')
+        span Кол-во информации
+        div(class='date_input_wrapper')
+          label(for="easy")
+            input(type="radio", name="difficulty", value='1' ,id='easy') 
+            span Упрощённая 
+          label(for="difficulty")
+            input(type="radio", name="difficulty", value='0' checked, id='difficulty') 
+            span Вся доступная
+
 
     input(type='submit', value='Получить информацию')

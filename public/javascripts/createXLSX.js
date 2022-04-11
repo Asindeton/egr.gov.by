@@ -4,7 +4,7 @@ const path = require("path");
 require("dotenv").config();
 
 module.exports = {
-  createFile: async (dataArr) => {
+  createFile: async (dataArr, difficulty) => {
     let today = new Date();
     const fileName = `${today.getDate()}.${
       today.getMonth() + 1
@@ -12,7 +12,10 @@ module.exports = {
 
     const pathDir = path.join(path.resolve("./data/"), fileName);
 
-    async function getInfoForTable(arr1, additionalData) {
+    async function getInfoForTable(arr1, additionalData, isSimple) {
+      if (isSimple == 1) {
+        return [];
+      }
       let _nameId = [];
       let _tempData = [];
 
@@ -94,10 +97,12 @@ module.exports = {
     // const workSheet3 = XLSX.utils.json_to_sheet(
     //   await getInfoForTable(dataArr[1].data, "ЮР"),
     // );
-    // const workSheet3 = XLSX.utils.json_to_sheet(dataArr[1].data);
-    // const workSheet4 = XLSX.utils.json_to_sheet(dataArr[2].data);
+
+    const workSheet3 = XLSX.utils.json_to_sheet(dataArr[1].data);
+    const workSheet4 = XLSX.utils.json_to_sheet(dataArr[2].data);
+
     const workSheet5 = XLSX.utils.json_to_sheet(
-      await getInfoForTable(dataArr[1].data, "ЮР"),
+      await getInfoForTable(dataArr[1].data, "ЮР", difficulty),
     );
 
     // const workSheet4 = XLSX.utils.json_to_sheet(dataArr[1].data);
@@ -112,14 +117,21 @@ module.exports = {
 
     XLSX.utils.book_append_sheet(workBook, workSheet2, "ИП");
     // XLSX.utils.book_append_sheet(workBook, workSheet5, "ИП2");
-    // XLSX.utils.book_append_sheet(workBook, workSheet3, "Юр. Лица");
-    // XLSX.utils.book_append_sheet(workBook, workSheet4, "Юр. Лица Адреса");
-    XLSX.utils.book_append_sheet(workBook, workSheet5, "Юр. Лица");
+    if (difficulty == "1") {
+      XLSX.utils.book_append_sheet(workBook, workSheet3, "Юр. Лица Упрощённое");
+      XLSX.utils.book_append_sheet(
+        workBook,
+        workSheet4,
+        "Юр. Лица Упрощённое Адреса",
+      );
+    } else {
+      XLSX.utils.book_append_sheet(workBook, workSheet5, "Юр. Лица");
+    }
 
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
 
-    XLSX.writeFile(workBook, pathDir);
+    // XLSX.writeFile(workBook, pathDir);
 
     let data = XLSX.write(workBook, {
       type: "buffer",
