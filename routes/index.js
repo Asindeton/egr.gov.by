@@ -41,7 +41,7 @@ const writeXML = async (email, from, to) => {
     _y2,
     _y,
   );
-  // console.log('Жду path',creatXLSXFile.createFile(requestArr));
+  console.log("Жду path", creatXLSXFile.createFile(requestArr));
 };
 
 schedule.scheduleJob("0 0 * * *", async function () {

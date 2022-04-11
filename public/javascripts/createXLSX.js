@@ -10,7 +10,7 @@ module.exports = {
       today.getMonth() + 1
     }.${today.getFullYear()}_${new Date().getHours()}.${new Date().getMinutes()}.${new Date().getSeconds()}.xlsx`;
 
-    // const pathDir = path.join(path.resolve("./data/"), fileName);
+    const pathDir = path.join(path.resolve("./data/"), fileName);
 
     async function getInfoForTable(arr1, additionalData) {
       let _nameId = [];
@@ -94,8 +94,11 @@ module.exports = {
     // const workSheet3 = XLSX.utils.json_to_sheet(
     //   await getInfoForTable(dataArr[1].data, "ЮР"),
     // );
-    const workSheet3 = XLSX.utils.json_to_sheet(dataArr[1].data);
-    const workSheet4 = XLSX.utils.json_to_sheet(dataArr[2].data);
+    // const workSheet3 = XLSX.utils.json_to_sheet(dataArr[1].data);
+    // const workSheet4 = XLSX.utils.json_to_sheet(dataArr[2].data);
+    const workSheet5 = XLSX.utils.json_to_sheet(
+      await getInfoForTable(dataArr[1].data, "ЮР"),
+    );
 
     // const workSheet4 = XLSX.utils.json_to_sheet(dataArr[1].data);
 
@@ -109,14 +112,14 @@ module.exports = {
 
     XLSX.utils.book_append_sheet(workBook, workSheet2, "ИП");
     // XLSX.utils.book_append_sheet(workBook, workSheet5, "ИП2");
-    XLSX.utils.book_append_sheet(workBook, workSheet3, "Юр. Лица");
-    // XLSX.utils.book_append_sheet(workBook, workSheet4, "Юр. Лица2");
-    XLSX.utils.book_append_sheet(workBook, workSheet4, "Юр. Лица Адреса");
+    // XLSX.utils.book_append_sheet(workBook, workSheet3, "Юр. Лица");
+    // XLSX.utils.book_append_sheet(workBook, workSheet4, "Юр. Лица Адреса");
+    XLSX.utils.book_append_sheet(workBook, workSheet5, "Юр. Лица");
 
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
 
-    // XLSX.writeFile(workBook, pathDir);
+    XLSX.writeFile(workBook, pathDir);
 
     let data = XLSX.write(workBook, {
       type: "buffer",
