@@ -104,7 +104,6 @@ module.exports = {
     const workSheet5 = XLSX.utils.json_to_sheet(
       await getInfoForTable(dataArr[1].data, "ЮР", difficulty),
     );
-
     // const workSheet4 = XLSX.utils.json_to_sheet(dataArr[1].data);
 
     // let some3 = XLSX.utils.sheet_to_buffer(await workSheet3);
@@ -128,7 +127,6 @@ module.exports = {
       XLSX.utils.book_append_sheet(workBook, workSheet5, "Юр. Лица");
     }
 
-    XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
     XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
 
     // XLSX.writeFile(workBook, pathDir);

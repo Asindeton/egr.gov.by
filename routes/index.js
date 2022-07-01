@@ -73,7 +73,7 @@ router.get("/", function (req, res, next) {
 
 router.post("/send_email", function (req, res, next) {
   const { email, from, to, difficulty } = req.body;
-  console.log({ email, from, to, difficulty });
+  // console.log({ email, from, to, difficulty });
   // console.log(req);
   writeXML(email, from, to, difficulty);
   res.render("emailIsSended", {
